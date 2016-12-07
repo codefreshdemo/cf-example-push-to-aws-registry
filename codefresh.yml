@@ -1,0 +1,20 @@
+version: '1.0'
+
+steps:
+  build_prj:
+    type: build
+    description: e2e use case
+    image_name: codefreshio/example-aws
+    dockerfile: Dockerfile
+    tag: latest
+
+  push_step:
+    type: push
+    description: Free text description
+    candidate: ${{build_prj}}
+    tag: ${{CF_BRANCH}}
+    registry: ${{AWS_REGISTRY}}
+    credentials:
+      username: ${{AWS_USERNAME}}
+      password: ${{AWS_PASSWORD}}
+    fail-fast: false
